@@ -11,7 +11,9 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps, RichText } from '@wordpress/block-editor';
+import { useBlockProps, MediaUpload, RichText } from '@wordpress/block-editor';
+
+import { Button } from '@wordpress/components';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -32,6 +34,34 @@ import './editor.scss';
 export default function Edit( { attributes, setAttributes } ) {
 	const blockProps = useBlockProps();
 
+    const getImageButton = (openEvent) => {
+		if(attributes.imageUrl) {
+		  return (
+			<img 
+			  src={ attributes.imageUrl }
+			  onClick={ openEvent }
+			  className="image"
+			/>
+		  );
+		}
+		else {
+		  return (
+			<div className="button-container">
+			  <Button 
+				onClick={ openEvent }
+				className="button button-large"
+			  >
+				Pick an image
+			  </Button>
+			</div>
+		  );
+		}
+	  };
+
+	const onSelectImage = ( media ) => {
+		setAttributes( { imageAlt: media.alt, imageUrl: media.url } )
+	}
+
 	const onChangeTitle = ( newTitle ) => {
 		setAttributes( { title: newTitle } )
 	}
@@ -42,6 +72,13 @@ export default function Edit( { attributes, setAttributes } ) {
 
 	return (
 		<div { ...blockProps }>
+			<MediaUpload
+				onSelect={ media => { setAttributes({ imageAlt: media.alt, imageUrl: media.url }); } }
+				type="image"
+				value={ attributes.imageID }
+				render={ ({ open }) => getImageButton(open) }
+			/>
+			<div className='card-inner'>
 			<RichText 
 				tagName="h2"
 				onChange={ onChangeTitle }
@@ -56,6 +93,7 @@ export default function Edit( { attributes, setAttributes } ) {
 				value={ attributes.content }
 				placeholder={ __( 'Write your text...' ) }
 			/>
+			</div>
 		</div>
 	);
 }

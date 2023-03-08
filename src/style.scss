@@ -6,7 +6,15 @@
  */
 
 .wp-block-create-block-ads-card-block {
-	background-color: #21759b;
-	color: #fff;
-	padding: 2px;
+	background-color: #fff;
+	border: 1px solid #333;
+	color: #333;
+}
+
+.card-inner {
+	padding: 30px 25px;
+
+	h2 {
+		margin-bottom: 20px;
+	}
 }

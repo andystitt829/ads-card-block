@@ -3,14 +3,24 @@
 	"apiVersion": 2,
 	"name": "create-block/ads-card-block",
 	"version": "0.1.0",
-	"title": "Ads Card Block",
+	"title": "Card Block",
 	"category": "widgets",
-	"icon": "smiley",
-	"description": "Example block scaffolded with Create Block tool.",
+	"icon": "id",
+	"description": "Card pattern with an image, title, and description.",
 	"supports": {
-		"html": false
+		"color": true
 	},
 	"attributes": {
+		"imageAlt": {
+			"type": "string",
+			"attribute": "alt",
+			"selector": ".card__image"
+		},
+		"imageUrl": {
+			"type": "string",
+			"attribute": "src",
+			"selector": ".card__image"
+		},
 		"title": {
 			"type": "string",
 			"source": "html",

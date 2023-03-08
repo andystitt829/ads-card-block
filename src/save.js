@@ -17,16 +17,43 @@ import { useBlockProps, RichText } from '@wordpress/block-editor';
  */
 export default function save( { attributes } ) {
 	const blockProps = useBlockProps.save();
+
+	const cardImage = (src, alt) => {
+		if(!src) return null;
+  
+		if(alt) {
+		  return (
+			<img 
+			  className="card__image" 
+			  src={ src }
+			  alt={ alt }
+			/> 
+		  );
+		}
+		
+		// No alt set, so let's hide it from screen readers
+		return (
+		  <img 
+			className="card__image" 
+			src={ src }
+			alt=""
+			aria-hidden="true"
+		  /> 
+		);
+	  };
 	return (
 		<div { ...blockProps }>
-			<RichText.Content 
-				tagName="h2" 
-				value={ attributes.title } 
-			/>
-			<RichText.Content 
-				tagName="p" 
-				value={ attributes.content } 
-			/>
+			{ cardImage(attributes.imageUrl, attributes.imageAlt) }
+			<div className="card-inner">
+				<RichText.Content 
+					tagName="h2" 
+					value={ attributes.title } 
+				/>
+				<RichText.Content 
+					tagName="p" 
+					value={ attributes.content } 
+				/>
+			</div>
 		</div>
 	);
 }
